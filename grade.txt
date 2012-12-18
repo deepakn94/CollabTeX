@@ -1,0 +1,25 @@
+
+Milestone 1 checkoff	9 / 9 
+Milestone 2 checkoff	10 / 10
+
+Design
+	Overview + State Machine Diagrams 7 / 7
+	Protocol 7 / 7
+	Message format 7 / 7
+
+Specifications 5 / 5
+Testing Strategy 5 / 5
+Testing 	4 / 5
+	Need more complex unit tests for some of the components.
+	
+Implementation
+	Networking	6 / 6
+	GUI	5 / 5
+	Realtime responsiveness	4 / 4
+	Persistance	5 / 5
+	Multiple Doc	5 / 5
+	Multiple Users	5 / 5
+	Concurrency	9 / 10
+		Concurrent deletes on the same character result in two deletions.
+
+Total 	93/95

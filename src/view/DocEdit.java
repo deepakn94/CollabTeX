@@ -42,6 +42,9 @@ public class DocEdit extends JFrame {
 	private JTextPane textArea;
 	private JScrollPane scrollText;
 	
+	private JScrollPane chatArea;
+	private JLabel chatLabel;
+	
 	private JLabel messageLabel;
 	private JButton latexButton;
 	private JButton closeLatexButton;
@@ -87,6 +90,9 @@ public class DocEdit extends JFrame {
 		closeLatexButton.setVisible(false);
 		latexDisplay.setVisible(false);
 		
+		chatLabel = new JLabel("Chat area");
+		chatArea = new JScrollPane(chatLabel); // TODO Set this to top of JScrollPane
+		
 		textArea = new JTextPane();
 		scrollText = new JScrollPane(textArea);
 		scrollText.setMinimumSize(new Dimension(700, 700));
@@ -116,6 +122,7 @@ public class DocEdit extends JFrame {
 					.addComponent(exitButton)
 					.addGroup(layout.createSequentialGroup()							
 							.addComponent(scrollText)
+							.addComponent(chatArea)
 							.addComponent(latexDisplay)
 							)
 					.addGroup(layout.createSequentialGroup()
@@ -140,6 +147,7 @@ public class DocEdit extends JFrame {
 		vGroup.addGroup(
 					layout.createParallelGroup()
 						.addComponent(scrollText)
+						.addComponent(chatArea)
 						.addComponent(latexDisplay)
 					);
 		vGroup.addGroup(
@@ -149,6 +157,10 @@ public class DocEdit extends JFrame {
 						.addComponent(latexButton)
 					);
 		layout.setVerticalGroup(vGroup);
+		
+		int height = scrollText.getHeight();
+		int width = scrollText.getWidth();
+		scrollText.setMinimumSize(new Dimension(4 * width/5, height)); // Needs some work to make the GUI look nicer
 		
 		
 		//latex button will both open the latex display then change into a render button

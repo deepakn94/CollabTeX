@@ -9,11 +9,15 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.PrintWriter;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
@@ -44,11 +48,15 @@ public class DocEdit extends JFrame {
 	
 	private JScrollPane chatArea;
 	private JLabel chatLabel;
+	private JButton chatButton;
+	private JTextField chatField;
 	
 	private JLabel messageLabel;
 	private JButton latexButton;
 	private JButton closeLatexButton;
 	private LatexPanel latexDisplay;
+	
+	private JPanel wholePane;
 	
 	private PrintWriter out;
 	private String docName;
@@ -90,8 +98,15 @@ public class DocEdit extends JFrame {
 		closeLatexButton.setVisible(false);
 		latexDisplay.setVisible(false);
 		
-		chatLabel = new JLabel("Chat area");
+		chatLabel = new JLabel("Chats will go here");
 		chatArea = new JScrollPane(chatLabel); // TODO Set this to top of JScrollPane
+		
+		chatButton = new JButton();
+		chatButton.setText("Enter text");
+		
+		chatField = new JTextField();
+		chatField.setPreferredSize(new Dimension(225,30));
+		chatField.setName("Chat field");
 		
 		textArea = new JTextPane();
 		scrollText = new JScrollPane(textArea);
@@ -100,9 +115,50 @@ public class DocEdit extends JFrame {
 		textDocument = textArea.getStyledDocument();
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		JPanel rightPane = new JPanel();
+		GroupLayout rightLayout = new GroupLayout(rightPane);
+		GroupLayout.ParallelGroup hRightGroup = rightLayout.createParallelGroup();
+		hRightGroup.addGroup(
+				rightLayout.createParallelGroup()
+					.addGroup(rightLayout.createSequentialGroup()
+							.addComponent(chatArea)
+							)
+					);
+		hRightGroup.addGroup(
+				rightLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+					.addGroup(rightLayout.createSequentialGroup()
+							.addComponent(chatField)
+							.addComponent(chatButton)
+							)
+					);
+		rightLayout.setHorizontalGroup(hRightGroup);
+		
+		//this sets up the vertical alignment
+		GroupLayout.SequentialGroup vRightGroup = rightLayout.createSequentialGroup();
+		vRightGroup.addGroup(
+				rightLayout.createParallelGroup()
+				.addGroup(rightLayout.createParallelGroup()
+						.addComponent(chatArea)
+						)
+				)			
+				.addGroup(
+						rightLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+							.addComponent(chatField)
+							.addComponent(chatButton)
+				);
+		rightLayout.setVerticalGroup(vRightGroup);
+		
+		rightPane.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createTitledBorder("Chat Area"),
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		rightPane.setPreferredSize(new Dimension(250, 145));
+		rightPane.setMinimumSize(new Dimension(10, 10));
 
-		GroupLayout layout = new GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
+		JPanel leftPane = new JPanel();
+		GroupLayout layout = new GroupLayout(leftPane);
+		
+		leftPane.setLayout(layout);
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
 
@@ -122,7 +178,6 @@ public class DocEdit extends JFrame {
 					.addComponent(exitButton)
 					.addGroup(layout.createSequentialGroup()							
 							.addComponent(scrollText)
-							.addComponent(chatArea)
 							.addComponent(latexDisplay)
 							)
 					.addGroup(layout.createSequentialGroup()
@@ -147,7 +202,6 @@ public class DocEdit extends JFrame {
 		vGroup.addGroup(
 					layout.createParallelGroup()
 						.addComponent(scrollText)
-						.addComponent(chatArea)
 						.addComponent(latexDisplay)
 					);
 		vGroup.addGroup(
@@ -158,10 +212,15 @@ public class DocEdit extends JFrame {
 					);
 		layout.setVerticalGroup(vGroup);
 		
-		int height = scrollText.getHeight();
-		int width = scrollText.getWidth();
-		scrollText.setMinimumSize(new Dimension(4 * width/5, height)); // Needs some work to make the GUI look nicer
-		
+		wholePane = new JPanel();
+		GroupLayout allGroup = new GroupLayout(wholePane);
+		allGroup.setHorizontalGroup(allGroup.createSequentialGroup()
+				.addComponent(leftPane).addComponent(rightPane));
+		allGroup.setVerticalGroup(allGroup
+				.createParallelGroup(Alignment.BASELINE).addComponent(leftPane)
+				.addComponent(rightPane));
+		wholePane.setLayout(allGroup);
+		add(wholePane);
 		
 		//latex button will both open the latex display then change into a render button
 		latexButton.addActionListener(new ActionListener() {

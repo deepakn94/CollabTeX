@@ -378,6 +378,13 @@ public class Controller {
 					currentDoc.updateCollaborators(collaborators, colors);
 				}
 				break;
+			case CHAT:
+				docName = requestMap.get("docName");
+				if (currentDoc.getName().equals(docName)) {
+					String content = requestMap.get("chatContent");
+					String userName = requestMap.get("userName");
+					currentDoc.addMessage(userName, content);
+				}
 			default:
 				continue;
 			}

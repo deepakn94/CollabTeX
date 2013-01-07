@@ -22,7 +22,8 @@ public class ControllerRequest {
 		ID, 
 		ENDDOCINFO, 
 		DOCINFO,
-		INVALID_REQUEST
+		INVALID_REQUEST,
+		CHAT
 	}
 
 	private String requestLine;
@@ -94,6 +95,8 @@ public class ControllerRequest {
 			return Type.ENDDOCINFO;
 		if(input.startsWith("docinfo"))
 			return Type.DOCINFO;
+		if (input.startsWith("chat"))
+			return Type.CHAT;
 		return Type.INVALID_REQUEST;
 	}
 	

@@ -73,6 +73,8 @@ public class ServerRequest {
 			return RequestType.CORRECT_ERROR;
 		} else if (input.startsWith("LOGOUT&")){
 			return RequestType.LOGOUT;			
+		} else if (input.startsWith("CHATMESSAGE&")) {
+			return RequestType.CHAT;
 		} else {
 			return RequestType.INVALID_REQUEST;
 		}

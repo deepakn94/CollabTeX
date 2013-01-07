@@ -287,6 +287,12 @@ public class Server {
 			docName = requestMap.get("docName");
 			return correctError(userName, docName);
 			
+		case CHAT:
+			userName = requestMap.get("userName");
+			docName = requestMap.get("docName");
+			String chatContent = requestMap.get("chatContent");
+			return chat(userName, docName, chatContent);
+			
 		default:
 			return "Invalid request";
     	}
@@ -363,6 +369,11 @@ public class Server {
 		}
 		
 		return "Invalid request";
+    }
+    
+    public String chat(String userName, String docName, String chatContent) {
+    	return "chat&userName=" + Regex.escape(userName) + "&docName=" + Regex.escape(docName) + "&" +
+    			"chatContent=" + chatContent + "&";
     }
 
     

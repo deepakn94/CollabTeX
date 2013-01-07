@@ -294,9 +294,14 @@ public class DocEdit extends JFrame {
 		packFrame();
 	}
 	
+	/**
+	 * This sends a chat message
+	 */
 	private void sendMessage() {
 		String message = userName + " : " + chatField.getText() + "\n";
-		chatLabel.append(message);		
+		chatLabel.append(message);
+		out.println("CHATMESSAGE&userName="+ Regex.escape(userName) + "&docName=" + Regex.escape(docName) 
+				+ "&chatContent=" + Regex.escape(chatField.getText()) + "&");
 		chatField.setText("");
 	}
 	
@@ -382,6 +387,13 @@ public class DocEdit extends JFrame {
 				messageLabel.setText("You have an error syncing. Please exit and reopen the doc");
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public void addMessage(String userName, String content) {
+		if (! this.userName.equals(userName)) {
+			String message = userName + " : " + content + "\n";
+			chatLabel.append(message);
 		}
 	}
 	

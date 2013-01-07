@@ -103,13 +103,14 @@ public class DocEdit extends JFrame {
 		chatLabel = new JTextArea();
 		chatLabel.setEditable(false);
 		chatArea = new JScrollPane(chatLabel); // TODO Set this to top of JScrollPane
-		chatArea.setPreferredSize(new Dimension(350, 800));
+		chatArea.setPreferredSize(new Dimension(300, 700));
+		chatArea.setMinimumSize(new Dimension(200, 700));
 		
 		chatButton = new JButton();
 		chatButton.setText("Enter text");
 		
 		chatField = new JTextField();
-		chatField.setPreferredSize(new Dimension(225,30));
+		chatField.setPreferredSize(new Dimension(200,30));
 		chatField.setName("Chat field");
 		
 		textArea = new JTextPane();
@@ -132,7 +133,7 @@ public class DocEdit extends JFrame {
 		rightPane.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createTitledBorder("Chat Area"),
 				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-		rightPane.setPreferredSize(new Dimension(250, 145));
+		rightPane.setPreferredSize(new Dimension(300, 145));
 		rightPane.setMinimumSize(new Dimension(10, 10));
 
 		JPanel leftPane = new JPanel();

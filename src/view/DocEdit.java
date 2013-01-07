@@ -202,6 +202,24 @@ public class DocEdit extends JFrame {
 		wholePane.setLayout(allGroup);
 		add(wholePane);
 		
+		chatField.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				sendMessage();				
+			}
+			
+		});
+		
+		chatButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				sendMessage();
+			}
+			
+		});
+		
 		//latex button will both open the latex display then change into a render button
 		latexButton.addActionListener(new ActionListener() {
 			@Override
@@ -274,6 +292,12 @@ public class DocEdit extends JFrame {
 		});	
 		
 		packFrame();
+	}
+	
+	private void sendMessage() {
+		String message = userName + " : " + chatField.getText() + "\n";
+		chatLabel.append(message);		
+		chatField.setText("");
 	}
 	
 	/**

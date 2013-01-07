@@ -26,6 +26,7 @@ public class Document {
 	private List<String> collaborators;
 	private int versionNumber;
 	private List<Change> changeList;	
+	private String chatContent;
 	
 	/**
 	 * Constructor of the class Document. Creates a new document with the given document ID, document name and collaborator
@@ -40,6 +41,7 @@ public class Document {
 		this.collaborators.add(collaborator);
 		this.versionNumber = 0;
 		this.changeList = new ArrayList<Change>();
+		this.chatContent = "";
 	}
 	
 	/**
@@ -132,6 +134,22 @@ public class Document {
 		synchronized(content){
 			lastEditDateTime = Calendar.getInstance();
 		}
+	}
+	
+	/**
+	 * Updates the chat content associated with the document
+	 * @param newChat Content of new chat
+	 */
+	public void appendChat (String newChat) {
+		chatContent += newChat;
+	}
+	
+	/**
+	 * Gets chat content associated with document
+	 * @return String representing chat content associated with the document
+	 */
+	public String getChat() {
+		return chatContent;
 	}
 	
 	/**

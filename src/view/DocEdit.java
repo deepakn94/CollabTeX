@@ -76,8 +76,9 @@ public class DocEdit extends JFrame {
 	 * @param userName Name of the user currently making the edit on the document
 	 * @param content Initial content of the document, when the document is loaded from the server
 	 * @param collaboratorNames The initial list of collaborators of the document at the time the document is loaded from the server
+	 * @param chatContent The chat content associated with the document
 	 */
-	public DocEdit(PrintWriter outputStream, String documentName, String user, String content, String collaboratorNames, int versionID, String colors){
+	public DocEdit(PrintWriter outputStream, String documentName, String user, String content, String collaboratorNames, int versionID, String colors, String chatContent){
 		super(documentName);
 		
 		this.version = versionID;
@@ -102,6 +103,7 @@ public class DocEdit extends JFrame {
 		
 		chatLabel = new JTextArea();
 		chatLabel.setEditable(false);
+		chatLabel.append(chatContent);
 		chatArea = new JScrollPane(chatLabel); // TODO Set this to top of JScrollPane
 		chatArea.setPreferredSize(new Dimension(300, 700));
 		chatArea.setMinimumSize(new Dimension(200, 700));
@@ -203,6 +205,7 @@ public class DocEdit extends JFrame {
 		wholePane.setLayout(allGroup);
 		add(wholePane);
 		
+		//Chat field and chat button action listeners
 		chatField.addActionListener(new ActionListener() {
 
 			@Override
@@ -391,6 +394,11 @@ public class DocEdit extends JFrame {
 		}
 	}
 	
+	/**
+	 * Adds the message to the chat window
+	 * @param userName Username of the user who sent the message
+	 * @param content Content of the message
+	 */
 	public void addMessage(String userName, String content) {
 		if (! this.userName.equals(userName)) {
 			String message = userName + " : " + content + "\n";
@@ -467,7 +475,7 @@ public class DocEdit extends JFrame {
 	 * @param args Unused
 	 */
 	public static void main(String[] args){
-		DocEdit main = new DocEdit(new PrintWriter(System.out), "Document name", "victor", "", "collab", 0, "");
+		DocEdit main = new DocEdit(new PrintWriter(System.out), "Document name", "victor", "", "collab", 0, "", "");
 		main.setVisible(true);
 	}
 }

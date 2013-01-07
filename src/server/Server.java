@@ -371,7 +371,17 @@ public class Server {
 		return "Invalid request";
     }
     
-    public String chat(String userName, String docName, String chatContent) {
+    /**
+     * Records a chat message 
+     * @param userName Username of the user 
+     * @param docName Name of document on which chat is being carried out
+     * @param chatContent Content of chat
+     * @return message to clients about the received chat
+     */
+    String chat(String userName, String docName, String chatContent) {
+    	String completeMessage = userName + " : " + chatContent + "\n";
+    	Document document = getDoc(docName);
+    	document.appendChat(completeMessage);
     	return "chat&userName=" + Regex.escape(userName) + "&docName=" + Regex.escape(docName) + "&" +
     			"chatContent=" + chatContent + "&";
     }
@@ -420,7 +430,7 @@ public class Server {
      * Gets the document info for doctable
      * @return
      */
-    private String getDocumentInfo(String userName){
+    String getDocumentInfo(String userName){
     	StringBuilder stringBuilder = new StringBuilder();
 		for (Document document : currentDocuments){
 			stringBuilder.append("docinfo&");
@@ -474,13 +484,14 @@ public class Server {
      * @param docName The name of the document that is being opened
      * @return Response from the server to the clients; all GUIs are updated
      */
-    private String openDoc(String userName, String docName) {
+    String openDoc(String userName, String docName) {
 		Document currentDocument = getDoc(docName);
 		currentDocument.addCollaborator(userName);
 		String docContent = currentDocument.toString();
 		docContent = docContent.replace("\n", "\t");
 		String collaborators = currentDocument.getCollab();
 		int version = currentDocument.getVersion();
+		String chatContent = currentDocument.getChat().replace("\n", "\t");
 		
 		String colors = "";
 		String color;
@@ -500,8 +511,8 @@ public class Server {
 		//updates collaborators than opens the document
 		return "update&docName=" + Regex.escape(docName) + "&collaborators=" + Regex.escape(collaborators) + "&colors=" + Regex.escape(colors) + "&\n" +
 				"opened&userName=" + Regex.escape(userName) + "&docName=" + Regex.escape(docName) + 
-				"&collaborators=" + Regex.escape(collaborators) + "&version=" + version + "&colors=" + Regex.escape(colors) + "&"
-				 + "docContent=" + Regex.escape(docContent) + "&"; 		
+				"&collaborators=" + Regex.escape(collaborators) + "&version=" + version + "&colors=" + Regex.escape(colors) + "&chatContent=" + Regex.escape(chatContent)
+				+ "&" + "docContent=" + Regex.escape(docContent) + "&"; 		
     }
     
     /**

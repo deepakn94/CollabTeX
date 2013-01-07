@@ -238,7 +238,7 @@ public class Controller {
 				docTableGUI.addData(dataDoc);
 				
 				if(this.userName.equals(requestUser)){
-					this.currentDoc = new DocEdit(serverOutput, docName, requestUser, "", requestUser, version, "");							
+					this.currentDoc = new DocEdit(serverOutput, docName, requestUser, "", requestUser, version, "", "");							
 					Thread newThread = new Thread(new Runnable() {
 						@Override
 						public void run() {
@@ -274,9 +274,10 @@ public class Controller {
 				String collaborators = requestMap.get("collaborators");
 				version = Integer.valueOf(requestMap.get("version"));
 				String colors = requestMap.get("colors");
+				String chatContent = requestMap.get("chatContent").replace("\t", "\n");
 				docContent = docContent.replace("\t", "\n");
 				if(this.userName.equals(requestUser)){
-					this.currentDoc = new DocEdit(serverOutput, docName, requestUser, docContent, collaborators, version, colors);							
+					this.currentDoc = new DocEdit(serverOutput, docName, requestUser, docContent, collaborators, version, colors, chatContent);							
 					Thread newThread = new Thread(new Runnable() {
 						@Override
 						public void run() {

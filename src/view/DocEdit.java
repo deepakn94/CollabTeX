@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -47,7 +49,7 @@ public class DocEdit extends JFrame {
 	private JScrollPane scrollText;
 	
 	private JScrollPane chatArea;
-	private JLabel chatLabel;
+	private JTextArea chatLabel;
 	private JButton chatButton;
 	private JTextField chatField;
 	
@@ -98,8 +100,10 @@ public class DocEdit extends JFrame {
 		closeLatexButton.setVisible(false);
 		latexDisplay.setVisible(false);
 		
-		chatLabel = new JLabel("Chats will go here");
+		chatLabel = new JTextArea();
+		chatLabel.setEditable(false);
 		chatArea = new JScrollPane(chatLabel); // TODO Set this to top of JScrollPane
+		chatArea.setPreferredSize(new Dimension(350, 800));
 		
 		chatButton = new JButton();
 		chatButton.setText("Enter text");
@@ -117,37 +121,13 @@ public class DocEdit extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		JPanel rightPane = new JPanel();
-		GroupLayout rightLayout = new GroupLayout(rightPane);
-		GroupLayout.ParallelGroup hRightGroup = rightLayout.createParallelGroup();
-		hRightGroup.addGroup(
-				rightLayout.createParallelGroup()
-					.addGroup(rightLayout.createSequentialGroup()
-							.addComponent(chatArea)
-							)
-					);
-		hRightGroup.addGroup(
-				rightLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-					.addGroup(rightLayout.createSequentialGroup()
-							.addComponent(chatField)
-							.addComponent(chatButton)
-							)
-					);
-		rightLayout.setHorizontalGroup(hRightGroup);
 		
-		//this sets up the vertical alignment
-		GroupLayout.SequentialGroup vRightGroup = rightLayout.createSequentialGroup();
-		vRightGroup.addGroup(
-				rightLayout.createParallelGroup()
-				.addGroup(rightLayout.createParallelGroup()
-						.addComponent(chatArea)
-						)
-				)			
-				.addGroup(
-						rightLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-							.addComponent(chatField)
-							.addComponent(chatButton)
-				);
-		rightLayout.setVerticalGroup(vRightGroup);
+		JPanel bottomRightPanel = new JPanel();
+		bottomRightPanel.add(chatField);
+		bottomRightPanel.add(chatButton);
+		
+		rightPane.add(BorderLayout.CENTER, chatArea);
+		rightPane.add(BorderLayout.SOUTH, bottomRightPanel);
 		
 		rightPane.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createTitledBorder("Chat Area"),
